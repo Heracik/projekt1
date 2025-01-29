@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/agent.css' %}?v3">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenti</title>
+</head>
+<body>
+    <nav >
+        <a href="{% url 'agents:agent_list' %}" class="button">Späť na zoznam agentov</a>        
+    </nav>
+    <h1>{{ agent.name }}</h1>
+<p id="momo">Rola: {{ agent.role }}</p>
+<p id="momo">{{ agent.description }}</p>
+<div class="origin-section">
+    <p class="origin-title">Pôvod:</p>
+    <img src="{{ agent.povod }}" alt="Vlajka krajiny" id="second-image">
+</div>
+<img src="{{ agent.image_url }}" alt="{{ agent.name }}" id="first-image">
+
+<h3>Schopnosti:</h3>
+<ul>
+    {% for ability in agent.abilities.all %}
+        <li>
+            <h4>{{ ability.name }}</h4>
+            <p>{{ ability.description }}</p>
+            {% if ability.image_url %}
+                <img src="{{ ability.image_url }}" alt="{{ ability.name }}">
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+</ul>
+</body>
+</html>

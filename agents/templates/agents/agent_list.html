@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/agent_list.css' %}?v3">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorant Agenti</title>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <a href="{% url 'login' %}" class="nav-button">Prihlásenie</a>
+            <a href="{% url 'register' %}" class="nav-button">Registrácia</a>
+            {% if user.is_authenticated %}
+                    <p><a href="{% url 'agents:logout' %}">Odhlásiť sa</a></p>
+                {% endif %}
+        </nav>
+    </header>
+    
+
+    <h1 class="heading">Valorant Agenti</h1>
+    <ul class="agent-list">
+        {% for agent in agents %}
+            <li class="agent-item">
+                <a href="{% url 'agents:agent_detail' agent.id %}" class="agent-link">
+                    <img src="{{ agent.image_url }}" alt="{{ agent.name }}" class="agent-image">
+                    <div class="agent-info">
+                        {{ agent.name }} - {{ agent.role }}
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
