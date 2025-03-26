@@ -6,7 +6,7 @@ body {
     background: url('https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/5b1c39c5397cfc61dfe67e0c55b45ca31b1f5a9d-854x484.png') no-repeat center center fixed;
     background-size: cover; /* Obalí celú stránku */
     background-blend-mode: darken; /* Tmavenie pozadia */
-    background-color: rgba(0, 0, 0, 0.9); /* Pridanie tmavej vrstvy */
+    background-color: rgba(0, 0, 0, 0.7); /* Pridanie tmavej vrstvy */
     color: #fff; /* Biela farba písma */
     line-height: 1.6;
     overflow-x: hidden;

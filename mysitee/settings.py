@@ -52,6 +52,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "tvojemail@gmail.com"
+EMAIL_HOST_PASSWORD = "tvoje_heslo"  # Použi App Password, nie reálne heslo!
+
+DEFAULT_FROM_EMAIL = "tvojemail@gmail.com"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+
 ROOT_URLCONF = 'mysitee.urls'
 
 TEMPLATES = [

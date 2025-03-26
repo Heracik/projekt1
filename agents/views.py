@@ -7,6 +7,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def agent_list(request):
@@ -23,15 +25,25 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         username = request.POST.get("username")
+        email = request.POST.get("email")  
+
         if form.is_valid():
             user = form.save()
             login(request, user)
-            message = "Registrácia bola úspešná! Vitajte, .'{username}'"
+
+            # Odoslanie e-mailu
+            subject = "Vitajte v našej stránke!"
+            message = f"Ahoj {username},\n\nĎakujeme za registráciu. "
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [email]
+
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
             return redirect("agents:agent_list")  # Zmena z polls:index na rentals:index
         else:
             message = "Registrácia zlyhala. Skontrolujte chyby nižšie."
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm(request.POST)
 
     return render(request, "accounts/register.html", {"form": form})
 
@@ -59,3 +71,14 @@ def logout_view(request):
     logout(request)
     #messages.info(request, "Úspešne ste sa odhlásili.")
     return redirect("agents:agent_list")
+
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
